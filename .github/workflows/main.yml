@@ -1,0 +1,70 @@
+name: Flutter APK Build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+        cache: true
+
+    - name: Get dependencies
+      run: flutter pub get
+
+    - name: Analyze project source
+      run: flutter analyze --fatal-infos
+
+    - name: Run tests
+      run: flutter test --coverage
+
+    - name: Build APK (Release)
+      run: flutter build apk --release --split-per-abi
+
+    - name: Build APK (Debug) 
+      run: flutter build apk --debug
+
+    - name: Create build folder
+      run: |
+        mkdir -p build/artifacts
+        cp build/app/outputs/flutter-apk/app-release.apk build/artifacts/
+        cp build/app/outputs/flutter-apk/app-debug.apk build/artifacts/
+
+    - name: Upload Release APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: release-apk
+        path: build/app/outputs/flutter-apk/app-release.apk
+        retention-days: 30
+
+    - name: Upload Debug APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: debug-apk
+        path: build/app/outputs/flutter-apk/app-debug.apk
+        retention-days: 7
+
+    - name: Upload Build Folder
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifacts
+        path: build/artifacts/
+        retention-days: 30
