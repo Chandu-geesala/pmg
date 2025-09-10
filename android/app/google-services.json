@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "653860201928",
+    "project_id": "pmg-engineering-pvt-ltd",
+    "storage_bucket": "pmg-engineering-pvt-ltd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653860201928:android:28b2b78e1313a6ff3f0cfd",
+        "android_client_info": {
+          "package_name": "com.chandu.pmg_assignment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCx_mqqI3NnOXHlPthRwr4NubE_bEcN4zw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
